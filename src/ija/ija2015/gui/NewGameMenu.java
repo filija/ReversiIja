@@ -72,6 +72,27 @@ public class NewGameMenu extends JFrame{
         b1.setBounds(100, 120, 150, 50);
         b1.setFont(font);
         frame.getContentPane().add(b1);
+        b1.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e){	//Vytvoreni desky po kliku na star game
+        		if(r1.isSelected()){
+        			System.out.println("Je zvolena moznost 6");
+        			new CreatBoard(6, r5.isSelected());
+        		}
+        		if(r2.isSelected()){
+        			System.out.println("Je zvolena moznost 8");
+        			new CreatBoard(8, r5.isSelected());
+        		}
+        		if(r3.isSelected()){
+        			System.out.println("Je zvolena moznost 10");
+        			new CreatBoard(10, r5.isSelected());
+        		}
+        		if(r4.isSelected()){
+        			System.out.println("Je zvolena moznost 12");
+        			new CreatBoard(12, r5.isSelected());
+        		}
+        		frame.dispose();
+        	}
+        });
         
         JButton b3 = new JButton("Exit");
         b3.setBounds(100, 200, 150, 50);
