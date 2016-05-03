@@ -5,13 +5,15 @@
  */
 package ija.ija2015.gui;
 
+import ija.ija2015.actions.LoadGame;
 import ija.ija2015.actions.StartNewGame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenu extends JFrame{
+public class MainMenu extends JFrame {
+    
     private JFrame frame;
     
      public MainMenu() {
@@ -28,17 +30,19 @@ public class MainMenu extends JFrame{
         JButton b1 = new JButton("New game");
         b1.setBounds(50, 50, 150, 50);
         b1.setFont(font);
-        b1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               new StartNewGame().startNewGame(frame);
-            }
+        b1.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+            new NewGameMenu();
         });
         frame.getContentPane().add(b1);
         
         JButton b2 = new JButton("Load game");
         b2.setBounds(50, 125, 150, 50);
         b2.setFont(font);
-        //nejaka akce
+        b2.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+            new LoadGame(frame);
+        });
         frame.getContentPane().add(b2);
         
         JButton b3 = new JButton("Exit");
@@ -52,5 +56,7 @@ public class MainMenu extends JFrame{
         frame.getContentPane().add(b3);
         
         frame.setVisible(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
     }
 }
