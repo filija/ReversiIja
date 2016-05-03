@@ -10,7 +10,7 @@ public class NewGameMenu extends JFrame{
     private JFrame frame;
     
     Font font = new Font("Dialog", Font.PLAIN, 15);
-         
+    private CreatBoard start = null;
     public NewGameMenu() {
         
         frame = new JFrame("Othello - New Game");
@@ -73,8 +73,8 @@ public class NewGameMenu extends JFrame{
         b1.setFont(font);
         frame.getContentPane().add(b1);
         b1.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e){	//Vytvoreni desky po kliku na star game
-        		CreatBoard start = null;
+        	public void actionPerformed(ActionEvent e){	//Vytvoreni desky po kliku na start game
+        		
         		if(r1.isSelected()){
         			System.out.println("Je zvolena moznost 6");
         			start=new CreatBoard(6, r5.isSelected());
@@ -91,21 +91,21 @@ public class NewGameMenu extends JFrame{
         			System.out.println("Je zvolena moznost 12");
         			start=new CreatBoard(12, r5.isSelected());
         		}
+        		
         		frame.dispose();
-        		start.PlayGame(); //Hra zacina
         	}
         });
         
         JButton b3 = new JButton("Exit");
         b3.setBounds(100, 200, 150, 50);
         b3.setFont(font);
-        b3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               frame.dispose();
-            }
+        b3.addActionListener((ActionEvent e) -> {
+            frame.dispose();
         });
         frame.getContentPane().add(b3);
         
-     
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
     }
+    
 }
