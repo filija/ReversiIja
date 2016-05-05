@@ -2,6 +2,8 @@ package ija.ija2015.gui;
 
 import ija.ija2015.actions.HelpRules;
 import ija.ija2015.actions.LoadGame;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,8 +27,10 @@ public class CreatBoard implements MouseListener{
 	JFrame BoardWindow;
 	JPanel board;
 	FieldGUI square[][];
-	JLabel popisek;
 	JLabel hrac;
+	JLabel skore;
+	JLabel errOutput;	//Vystup pro zadane chybne pole
+	JPanel infoPanel;
     JMenuBar menuBar;
 	private Game hra;
 	private int size;
@@ -34,14 +38,37 @@ public class CreatBoard implements MouseListener{
 	CreatBoard(int sizeBoard, boolean computer) {
 		this.size=sizeBoard;
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
-		BoardWindow.setSize(600, 600);
+		infoPanel=new JPanel();
+		errOutput=new JLabel("");
+		
+		if(sizeBoard==6){
+			BoardWindow.setSize(700, 500);
+			infoPanel.setPreferredSize(new Dimension(200, 350));
+		}
+		else if(sizeBoard==8){
+			BoardWindow.setSize(800, 600);
+			infoPanel.setPreferredSize(new Dimension(200, 400));
+		}
+		else if(sizeBoard==10){
+			BoardWindow.setSize(900, 700);
+			infoPanel.setPreferredSize(new Dimension(200, 400));
+		}
+		else{
+			BoardWindow.setSize(1000, 800);
+			infoPanel.setPreferredSize(new Dimension(200, 400));
+		}
+			
+			
 		BoardWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 BoardWindow.setLayout(new FlowLayout());
 		BoardWindow.setVisible(true);
 		board=new JPanel();
-		popisek=new JLabel("");
 		hrac=new JLabel("");
 		BoardWindow.add(board);
+		
+		
+		infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		infoPanel.setVisible(true);
 		
                 JMenuBar menuBar = new JMenuBar();
                 BoardWindow.setJMenuBar(menuBar);
@@ -85,23 +112,24 @@ public class CreatBoard implements MouseListener{
 		//board.setPreferredSize(new Dimension(500, 500));
 		board.setBounds(0, 0, sizeBoard, sizeBoard);
 		square=new FieldGUI[sizeBoard][sizeBoard];
-	
+		Color colorOfField=new Color(81, 191, 81);
 		for(int i=0;i<size; i++) 
 			for(int j=0; j<size; j++)
 			{		
 		
 					square[i][j]=new FieldGUI();
 					square[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
-					square[i][j].setBackground(Color.green);
+					square[i][j].setBackground(colorOfField);
 					board.add(square[i][j]);
 				
 			}
 		
 		BoardWindow.add(new JPanel());
-		BoardWindow.add(popisek);
+		infoPanel.add(hrac, BorderLayout.PAGE_END);
+		infoPanel.add(errOutput, BorderLayout.LINE_END);
+		BoardWindow.add(infoPanel, FlowLayout.LEFT);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
-		BoardWindow.add(hrac);
 		
 		this.playGame();
 
@@ -145,9 +173,9 @@ public class CreatBoard implements MouseListener{
 		hra.addPlayer(cerny);
 		hra.nextPlayer();
 		if(hra.currentPlayer().isWhite())
-			System.out.println("Bily");
+			hrac.setText("Hrac na tahu: Bily");
 		else
-			System.out.println("cerny");
+			hrac.setText("Hrac na tahu: Cerny");
 		this.updateBoard(hra);
 	}
 	
@@ -169,15 +197,20 @@ public class CreatBoard implements MouseListener{
 			
 			if(hra.currentPlayer().canPutDisk(hra.getBoard().getField(i, j)))
 			{
+				errOutput.setText("");
+				if(hra.currentPlayer().isWhite())
+					hrac.setText("Hrac na tahu: Cerny");
+				else
+					hrac.setText("Hrac na tahu: Bily");
 				square[i][j].putImgDisk(actual);
 				hra.currentPlayer().putDisk(hra.getBoard().getField(i, j));
 				this.updateBoard(this.hra);
-				popisek.setText("");
 				hra.nextPlayer();
 			}
 			else{
-				popisek.setText("Neplatne policko");
-				this.updateBoard(this.hra);
+				errOutput.setText("Neplatne pole");
+				//this.updateBoard(this.hra);
+				
 			}
 	}
 
