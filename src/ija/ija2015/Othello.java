@@ -8,13 +8,11 @@ public class Othello {
     private MainMenu mainMenuFrame;
     
     public static void main(String argv[]) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            startGame();
+        javax.swing.SwingUtilities.invokeLater(new Runnable(){
+        	public void run(){
+        		new Othello();
+        	}
         });
-    }
-
-    private static void startGame() {
-        new Othello();
     }
 
     public Othello(){
