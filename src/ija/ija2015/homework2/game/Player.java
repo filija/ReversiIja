@@ -8,7 +8,6 @@ package ija.ija2015.homework2.game;
 import ija.ija2015.homework2.board.Board;
 import ija.ija2015.homework2.board.Disk;
 import ija.ija2015.homework2.board.Field;
-import java.util.Objects;
 
 /**
  *
@@ -52,7 +51,7 @@ public class Player {
                         while (!field2.isEmpty()) {
                             if (field2.getDisk().isWhite() == "white".equals(this.color)) {
                                 return true;
-                            }
+                            }                            
                             field2 = field2.nextField(dir);
                         }
                     }
@@ -76,8 +75,9 @@ public class Player {
             for(Field.Direction dir : Field.Direction.values()) {
                 changeDir = null;
                 field2 = field.nextField(dir);
-
-                if (field2.getDisk() != null) {
+                
+                if(field2!=null){
+                  if (field2.getDisk() != null) {
                     if (field2.getDisk().isWhite() != "white".equals(this.color)) {
 
                         while (!field2.isEmpty()) {
@@ -97,6 +97,7 @@ public class Player {
                         }
                     }
                 }
+             }
             }
             return true;
         }
