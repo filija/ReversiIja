@@ -8,6 +8,7 @@ package ija.ija2015.homework2.game;
 import ija.ija2015.homework2.board.Board;
 import ija.ija2015.homework2.board.Disk;
 import ija.ija2015.homework2.board.Field;
+import java.util.Objects;
 
 /**
  *
@@ -44,15 +45,15 @@ public class Player {
             Field field2;
             for(Field.Direction dir : Field.Direction.values()) {
                 field2 = field.nextField(dir);
-                if(field2==null)
-                	return false;
-                if (field2.getDisk() != null) {
-                    if (field2.getDisk().isWhite() != "white".equals(this.color)) {
-                        while (!field2.isEmpty()) {
-                            if (field2.getDisk().isWhite() == "white".equals(this.color)) {
-                                return true;
-                            }                            
-                            field2 = field2.nextField(dir);
+                if (field2 != null) {
+                    if (field2.getDisk() != null) {
+                        if (field2.getDisk().isWhite() != "white".equals(this.color)) {
+                            while (field2 != null && field2.getDisk() != null) {
+                                if (field2.getDisk().isWhite() == "white".equals(this.color)) {
+                                    return true;
+                                }
+                                field2 = field2.nextField(dir);
+                            }
                         }
                     }
                 }
@@ -75,12 +76,11 @@ public class Player {
             for(Field.Direction dir : Field.Direction.values()) {
                 changeDir = null;
                 field2 = field.nextField(dir);
-                
-                if(field2!=null){
-                  if (field2.getDisk() != null) {
+
+                if (field2 != null && field2.getDisk() != null) {
                     if (field2.getDisk().isWhite() != "white".equals(this.color)) {
 
-                        while (!field2.isEmpty()) {
+                        while (field2 != null && field2.getDisk() != null) {
                             if(field2.getDisk().isWhite() == "white".equals(this.color)) {
                                 changeDir = dir;
                                 break;
@@ -97,7 +97,6 @@ public class Player {
                         }
                     }
                 }
-             }
             }
             return true;
         }
@@ -107,9 +106,10 @@ public class Player {
     public void init(Board board) {
         int size = board.getSize();
         this.DiskCount = size;
+
+        board.getField((size/2)-2, (size/2)-2).putDisk(new Disk(true));
         board.getField(size/2-1, size/2-1).putDisk(new Disk(true));
-        board.getField((size/2), (size/2)).putDisk(new Disk(true));
-        board.getField(size/2-1, (size/2)).putDisk(new Disk(false));
-        board.getField((size/2), size/2-1).putDisk(new Disk(false));
+        board.getField((size/2)-2, size/2-1).putDisk(new Disk(false));
+        board.getField(size/2-1, (size/2)-2).putDisk(new Disk(false));
     }
 }

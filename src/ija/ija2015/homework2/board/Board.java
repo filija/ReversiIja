@@ -23,7 +23,7 @@ public class Board {
         }
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {    
-                if ((row > 0) && (col > 0) && (row < size - 1) && (col < size - 1)) {
+                if ((row >= 0) && (col >= 0) && (row <= size - 1) && (col <= size - 1)) {
                     if (row > 1) {
                         this.field[row][col].addNextField(Field.Direction.U, this.field[row-1][col]);
                     }
