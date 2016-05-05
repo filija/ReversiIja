@@ -86,8 +86,8 @@ public class CreatBoard implements MouseListener{
 		board.setBounds(0, 0, sizeBoard, sizeBoard);
 		square=new FieldGUI[sizeBoard+1][sizeBoard+1];
 		
-		for(int i=1;i<size+1; i++) 
-			for(int j=1; j<size+1; j++)
+		for(int i=0;i<size; i++) 
+			for(int j=0; j<size; j++)
 			{		
 		
 					square[i][j]=new FieldGUI();
@@ -112,8 +112,8 @@ public class CreatBoard implements MouseListener{
 	 */
 	public void updateBoard(Game hra)
 	{
-		for(int i=1; i<this.size; i++)
-			for(int j=1; j<this.size; j++)
+		for(int i=0; i<this.size; i++)
+			for(int j=0; j<this.size; j++)
 			{
 				if(!(hra.getBoard().getField(i, j).isEmpty())){
 					if(hra.getBoard().getField(i, j).getDisk().isWhite())
@@ -142,6 +142,10 @@ public class CreatBoard implements MouseListener{
 		
 		hra.addPlayer(bily);
 		hra.addPlayer(cerny);
+		if(hra.currentPlayer().isWhite())
+			System.out.println("Bily");
+		else
+			System.out.println("cerny");
 		this.updateBoard(hra);
 	}
 	
@@ -153,12 +157,11 @@ public class CreatBoard implements MouseListener{
 			colorDisk actual;
 			System.out.println("i je: "+i);
 			System.out.println("j je: "+j);
+		
 			if(hra.currentPlayer().isWhite()){
-				hrac.setText("Na tahu je Cerny hrac");
 				actual=colorDisk.WHITE;
 			}				
 			else{
-				hrac.setText("Na tahu je Bily hrac");
 				actual=colorDisk.BLACK;
 			}
 			
@@ -168,11 +171,13 @@ public class CreatBoard implements MouseListener{
 				hra.currentPlayer().putDisk(hra.getBoard().getField(i, j));
 				this.updateBoard(this.hra);
 				popisek.setText("");
+				hra.nextPlayer();
 			}
 			else{
 				popisek.setText("Neplatne policko");
+				this.updateBoard(this.hra);
 			}
-			hra.nextPlayer();
+			
 	}
 
 	@Override
