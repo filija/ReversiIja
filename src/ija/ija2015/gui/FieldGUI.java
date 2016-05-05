@@ -11,6 +11,7 @@ import ija.ija2015.gui.CreatBoard;
  */
 
 public class FieldGUI extends JPanel{
+	
 	ImageIcon white;
 	ImageIcon black;
 	JLabel diskerW;
