@@ -2,17 +2,13 @@ package ija.ija2015.gui;
 
 import ija.ija2015.actions.HelpRules;
 import ija.ija2015.actions.LoadGame;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.awt.event.ActionEvent;
-import java.awt.Component;
 
 import javax.swing.*;
 
@@ -22,19 +18,17 @@ import ija.ija2015.homework2.game.Player;
 import ija.ija2015.homework2.game.ReversiRules;
 import ija.ija2015.actions.SaveGame;
 import java.awt.Toolkit;
-import javax.swing.border.Border;
 import ija.ija2015.gui.colorDisk; 
 import ija.ija2015.gui.FieldGUI;
 
-public class CreatBoard{
+public class CreatBoard implements MouseListener{
 	JFrame BoardWindow;
 	JPanel board;
 	FieldGUI square[][];
 	JLabel popisek;
+	JLabel hrac;
     JMenuBar menuBar;
 	private Game hra;
-	private ImageIcon white;
-	private ImageIcon black;
 	private int size;
 	
 	CreatBoard(int sizeBoard, boolean computer) {
@@ -45,7 +39,8 @@ public class CreatBoard{
                 BoardWindow.setLayout(new FlowLayout());
 		BoardWindow.setVisible(true);
 		board=new JPanel();
-		popisek=new JLabel("Hrac: ");
+		popisek=new JLabel("");
+		hrac=new JLabel("");
 		BoardWindow.add(board);
 		
                 JMenuBar menuBar = new JMenuBar();
@@ -89,68 +84,121 @@ public class CreatBoard{
 		board.setLayout(new GridLayout(sizeBoard, sizeBoard));
 		board.setPreferredSize(new Dimension(500, 500));
 		board.setBounds(0, 0, sizeBoard, sizeBoard);
+		square=new FieldGUI[sizeBoard+1][sizeBoard+1];
 		
-		square=new FieldGUI[sizeBoard][sizeBoard];
-		for(int i=0;i<sizeBoard; i++) 
-			for(int j=0; j<sizeBoard; j++)
-			{			                   
-				square[i][j]=new FieldGUI();
-				square[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
-				square[i][j].setBackground(Color.green);		
-				square[i][j].addMouseListener(square[i][j]);
-				board.add(square[i][j]);	
-				BoardWindow.add(new JPanel());
-				BoardWindow.add(popisek);
-				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-				BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
-		}
+		for(int i=1;i<size+1; i++) 
+			for(int j=1; j<size+1; j++)
+			{		
+		
+					square[i][j]=new FieldGUI();
+					square[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
+					square[i][j].setBackground(Color.green);
+					board.add(square[i][j]);
+				
+			}
+		
+		BoardWindow.add(new JPanel());
+		BoardWindow.add(popisek);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
+		BoardWindow.add(hrac);
 		
 		this.playGame();
 
 	}
-
 	/**
-	 * Funkce pro inicializaci a prubeh hry
+	 * Funkce pro aktualizaci desky a kamenu na desce
+	 * @param hra
+	 */
+	public void updateBoard(Game hra)
+	{
+		for(int i=1; i<this.size; i++)
+			for(int j=1; j<this.size; j++)
+			{
+				if(!(hra.getBoard().getField(i, j).isEmpty())){
+					if(hra.getBoard().getField(i, j).getDisk().isWhite())
+					{
+						this.square[i][j].putImgDisk(colorDisk.WHITE);							
+					}
+					else{
+						this.square[i][j].putImgDisk(colorDisk.BLACK);
+					}
+				}
+			}
+	}
+	
+	/**
+	 * Funkce pro inicializaci hry
 	 */
 	public void playGame()
 	{
+		board.addMouseListener(this);
 		ReversiRules pravidla=new ReversiRules(this.size);
 		Board deska=new Board(pravidla);
-		Game hra=new Game(deska);
+		hra=new Game(deska);
 		
 		Player bily=new Player(true);
 		Player cerny=new Player(false);
 		
 		hra.addPlayer(bily);
 		hra.addPlayer(cerny);
-		
-	  for(int k=0; k<10; k++)
-	  {
-		for(int i=0; i<this.size; i++)
-			for(int j=0; j<this.size; j++)
+		this.updateBoard(hra);
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//TODO Vytvorit i pro ostatni velikosti desek, jen souradnice.
+			int i=e.getY()/63;
+			int j=e.getX()/63;
+			colorDisk actual;
+			System.out.println("i je: "+i);
+			System.out.println("j je: "+j);
+			if(hra.currentPlayer().isWhite()){
+				hrac.setText("Na tahu je Cerny hrac");
+				actual=colorDisk.WHITE;
+			}				
+			else{
+				hrac.setText("Na tahu je Bily hrac");
+				actual=colorDisk.BLACK;
+			}
+			
+			if(hra.currentPlayer().canPutDisk(hra.getBoard().getField(i, j)))
 			{
-				if(!(hra.getBoard().getField(i, j).isEmpty())){
-					if(hra.getBoard().getField(i, j).getDisk().isWhite())
-					{
-						this.square[i][j].putImgDisk(colorDisk.WHITE);
-						hra.currentPlayer().putDisk(deska.getField(i, j));
-						continue;
-					}
-					else{
-						this.square[i][j].putImgDisk(colorDisk.BLACK);
-						hra.currentPlayer().putDisk(deska.getField(i, j));
-						continue;
-					}
-				}
-				
-					if(hra.currentPlayer().isWhite())
-						square[i][j].setPlayerOnMove(colorDisk.WHITE);
-					else
-						square[i][j].setPlayerOnMove(colorDisk.BLACK);
-					
-					//square[i][j].addMouseListener(square[i][j]);
+				square[i][j].putImgDisk(actual);
+				hra.currentPlayer().putDisk(hra.getBoard().getField(i, j));
+				this.updateBoard(this.hra);
+				popisek.setText("");
+			}
+			else{
+				popisek.setText("Neplatne policko");
 			}
 			hra.nextPlayer();
-	   }
 	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
+
 }
+
+
+
