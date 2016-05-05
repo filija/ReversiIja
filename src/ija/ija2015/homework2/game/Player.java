@@ -45,7 +45,8 @@ public class Player {
             Field field2;
             for(Field.Direction dir : Field.Direction.values()) {
                 field2 = field.nextField(dir);
-                
+                if(field2==null)
+                	return false;
                 if (field2.getDisk() != null) {
                     if (field2.getDisk().isWhite() != "white".equals(this.color)) {
                         while (!field2.isEmpty()) {
@@ -105,9 +106,9 @@ public class Player {
     public void init(Board board) {
         int size = board.getSize();
         this.DiskCount = size;
-        board.getField(size/2, size/2).putDisk(new Disk(true));
-        board.getField((size/2)+1, (size/2)+1).putDisk(new Disk(true));
-        board.getField(size/2, (size/2)+1).putDisk(new Disk(false));
-        board.getField((size/2)+1, size/2).putDisk(new Disk(false));
+        board.getField(size/2-1, size/2-1).putDisk(new Disk(true));
+        board.getField((size/2), (size/2)).putDisk(new Disk(true));
+        board.getField(size/2-1, (size/2)).putDisk(new Disk(false));
+        board.getField((size/2), size/2-1).putDisk(new Disk(false));
     }
 }
