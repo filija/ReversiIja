@@ -125,6 +125,7 @@ public class CreatBoard implements MouseListener{
 					}
 				}
 			}
+		
 	}
 	
 	/**
@@ -133,6 +134,7 @@ public class CreatBoard implements MouseListener{
 	public void playGame()
 	{
 		board.addMouseListener(this);
+
 		ReversiRules pravidla=new ReversiRules(this.size);
 		Board deska=new Board(pravidla);
 		hra=new Game(deska);
@@ -142,6 +144,7 @@ public class CreatBoard implements MouseListener{
 		
 		hra.addPlayer(bily);
 		hra.addPlayer(cerny);
+		hra.nextPlayer();
 		if(hra.currentPlayer().isWhite())
 			System.out.println("Bily");
 		else
@@ -177,7 +180,6 @@ public class CreatBoard implements MouseListener{
 				popisek.setText("Neplatne policko");
 				this.updateBoard(this.hra);
 			}
-			
 	}
 
 	@Override
@@ -189,13 +191,11 @@ public class CreatBoard implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
