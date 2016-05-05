@@ -82,10 +82,10 @@ public class CreatBoard implements MouseListener{
 
                 
 		board.setLayout(new GridLayout(sizeBoard, sizeBoard));
-		board.setPreferredSize(new Dimension(500, 500));
+		//board.setPreferredSize(new Dimension(500, 500));
 		board.setBounds(0, 0, sizeBoard, sizeBoard);
-		square=new FieldGUI[sizeBoard+1][sizeBoard+1];
-		
+		square=new FieldGUI[sizeBoard][sizeBoard];
+	
 		for(int i=0;i<size; i++) 
 			for(int j=0; j<size; j++)
 			{		
@@ -134,8 +134,7 @@ public class CreatBoard implements MouseListener{
 	public void playGame()
 	{
 		board.addMouseListener(this);
-
-		ReversiRules pravidla=new ReversiRules(this.size);
+		ReversiRules pravidla=new ReversiRules(this.size+2);
 		Board deska=new Board(pravidla);
 		hra=new Game(deska);
 		
