@@ -13,7 +13,7 @@ import ija.ija2015.homework2.board.Rules;
  *
  * @author xturek05
  */
-public class ReversiRules implements Rules{
+public class ReversiRules implements Rules, java.io.Serializable{
     
     private int size;
     
@@ -21,14 +21,17 @@ public class ReversiRules implements Rules{
         this.size = size;
     }
     
+    @Override
     public int getSize() {
         return this.size;
     }
     
+    @Override
     public int numberDisks() {
         return (this.size*this.size/2);
     }
-
+    
+    @Override
     public Field createField(int row, int col) {
         Field field = (Field) new BoardField(row, col);
         return field;

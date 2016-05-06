@@ -8,16 +8,18 @@ public class HelpRules {
     
     public HelpRules() {
         
-        JFrame frame = new JFrame("Reversi play"); 	//frame hraciho pole
-	frame.setSize(600, 600);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setVisible(true);
+        JFrame frame = new JFrame("Help");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(100, 100, 350, 300);
+        frame.getContentPane().setLayout(null);
+        frame.toFront();       
         
-        JButton close = new JButton("Zavřít napovědu");
-        close.setBounds(100, 200, 150, 50);
-        close.addActionListener((ActionEvent e) -> {
+        JButton closeButton = new JButton("Zavřít");
+        closeButton.setBounds(150, 200, 50, 30);
+        closeButton.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
-        frame.getContentPane().add(close);
+        frame.getContentPane().add(closeButton);
+        frame.setVisible(true);
     }
 }

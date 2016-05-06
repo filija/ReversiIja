@@ -11,28 +11,32 @@ import ija.ija2015.homework2.board.Board;
  *
  * @author xturek05
  */
-public class Game {
-    private Player player1;
-    private Player player2;
-    private Player playerOnTurn;
-    private Board board;
+public class Game implements java.io.Serializable{
+    protected Player player1;
+    protected Player player2;
+    protected Player playerOnTurn;
+    protected Board board;
     
     public Game(Board board) {
         this.board = board;
     }
+
+    public Game() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public boolean addPlayer(Player player) {
-        if (this.player1 == null) {
-            player.init(this.board);
-            this.player1 = player;
-            if (this.player1.isWhite()) {
-                this.playerOnTurn = this.player1;
+        if (player1 == null) {
+            player.init(board);
+            player1 = player;
+            if (player1.isWhite()) {
+                playerOnTurn = player1;
             }
-        } else if (this.player2 == null) {
-            player.init(this.board);
-            this.player2 = player;
-            if (this.player1.isWhite()) {
-                this.playerOnTurn = this.player1;
+        } else if (player2 == null) {
+            player.init(board);
+            player2 = player;
+            if (player1.isWhite()) {
+                playerOnTurn = player1;
             }
         } else {
             return false;
@@ -41,38 +45,19 @@ public class Game {
     }
     
     public Player currentPlayer() {
-        return this.playerOnTurn;
+        return playerOnTurn;
     }
     
     public Player nextPlayer() {
-        if (this.playerOnTurn == this.player1) {
-            this.playerOnTurn = this.player2;
+        if (playerOnTurn == player1) {
+            playerOnTurn = player2;
         } else {
-            this.playerOnTurn = this.player1;
+            playerOnTurn = player1;
         }
-        return this.playerOnTurn;
+        return playerOnTurn;
     }
     
     public Board getBoard() {
-       return this.board; 
+       return board; 
     }
-    
-    public Player getPlayer(boolean color)
-    {
-    	if(color)	//Pokud je barva hrace bila
-    	{
-    		if(this.player1.isWhite())
-    			return this.player1;
-    		else
-    			return this.player2;
-    	}
-    	else{
-    		if(!this.player1.isWhite())
-    			return this.player1;
-    		else
-    			return this.player2;
-    	}
-    }
-
-    
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
  *
  * @author xturek05
  */
-public class Disk {
+public class Disk implements java.io.Serializable{
 
     private String color;
     
@@ -32,12 +32,14 @@ public class Disk {
         return "white".equals(this.color);
     }
 
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.color);
         return hash;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

@@ -11,7 +11,6 @@ import ija.ija2015.gui.CreatBoard;
  */
 
 public class FieldGUI extends JPanel{
-	
 	ImageIcon white;
 	ImageIcon black;
 	JLabel diskerW;
@@ -55,18 +54,6 @@ public class FieldGUI extends JPanel{
 			diskerB.setVisible(true);			
 		}
 	}
-	
-	public void removeImgDisk(colorDisk color)
-	{
-		if(colorDisk.WHITE==color)
-		{
-			diskerW.remove(this);
-			diskerW.setVisible(false);
-		}
-		else{
-			diskerB.remove(this);
-			diskerB.setVisible(false);
-		}
-	}
+
 	
 }

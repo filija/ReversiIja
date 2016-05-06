@@ -21,7 +21,7 @@ public class SaveGame {
     JTextField textfield = new JTextField("", 10);
     JButton button = new JButton("Save");
 
-    public SaveGame(Game game) {
+    public void saveGame(Game game) {
 	panel.add(textfield);
 	panel.add(button);
 	frame.add(panel);
@@ -41,6 +41,7 @@ public class SaveGame {
                 save.writeObject(game);
                 save.close();
             } catch (Exception exc){
+                System.out.print(exc);
                 JOptionPane.showMessageDialog(newframe, "Error while saving file.");
                 return;
             }

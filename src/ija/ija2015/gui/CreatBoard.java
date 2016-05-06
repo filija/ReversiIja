@@ -32,6 +32,7 @@ public class CreatBoard implements MouseListener{
 	JLabel errOutput;	//Vystup pro zadane chybne pole
 	JLabel countOfDisksW;
 	JLabel countOfDisksB;
+
 	
 	JPanel infoPanel;
     JMenuBar menuBar;
@@ -40,8 +41,9 @@ public class CreatBoard implements MouseListener{
 	private int countW;
 	private int countB;
 	final private int stackCount;
+	private LoadGame load;
 	
-	CreatBoard(int sizeBoard, boolean computer) {
+	public CreatBoard(int sizeBoard, boolean computer) {
 		this.size=sizeBoard;
 		stackCount=sizeBoard*sizeBoard;
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
@@ -93,12 +95,13 @@ public class CreatBoard implements MouseListener{
                 JMenuItem load = new JMenuItem("Načíst hru");
                 file.add(load);
                 load.addActionListener((ActionEvent e) -> {
-                    new LoadGame(BoardWindow);
+                   this.load=new LoadGame(BoardWindow);
+                    hra=this.load.getLoadGame();
                 });
                 JMenuItem save = new JMenuItem("Uložit hru");
                 file.add(save);
                 save.addActionListener((ActionEvent e) -> {
-                    new SaveGame(hra);
+                	new SaveGame().saveGame(hra);
                 });
                 JMenuItem exit = new JMenuItem("Konec");
                 file.add(exit);
@@ -140,7 +143,10 @@ public class CreatBoard implements MouseListener{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
 		
-		this.playGame();
+		if(hra==null)
+			this.playGame();
+		else
+			this.playLoadGame();
 
 	}
 	/**
@@ -168,6 +174,10 @@ public class CreatBoard implements MouseListener{
 			}
 	}
 	
+	public void playLoadGame()
+	{
+		this.updateBoard(hra);
+	}
 	/**
 	 * Funkce pro inicializaci hry
 	 */

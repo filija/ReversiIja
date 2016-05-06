@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author xturek05
  */
-public class BoardField implements Field {
+public class BoardField implements Field, java.io.Serializable {
     private Field array[];
     private int row;
     private int col;
@@ -19,14 +19,17 @@ public class BoardField implements Field {
         array = new Field[8];
     }
     
+    @Override
     public void addNextField(Field.Direction dirs, Field field) {
         this.array[dirs.ordinal()] = field;
     }
     
+    @Override
     public Field nextField(Field.Direction dirs) {
        return this.array[dirs.ordinal()];
     }
     
+    @Override
     public boolean putDisk(Disk disk) {
         if (this.disk == null) {
             this.disk = disk;
@@ -36,10 +39,12 @@ public class BoardField implements Field {
         }
     }
     
+    @Override
     public Disk getDisk() {
         return this.disk;
     }
 
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 29 * hash + Arrays.deepHashCode(this.array);
@@ -49,6 +54,7 @@ public class BoardField implements Field {
         return hash;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -72,10 +78,12 @@ public class BoardField implements Field {
         return true;
     }
 
+    @Override
     public boolean canPutDisk(Disk disk) {
         return this.disk == null;
     }
     
+    @Override
     public boolean isEmpty() {
         return (this.disk == null);   
     }

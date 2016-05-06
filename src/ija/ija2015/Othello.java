@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Othello {
  
-    private MainMenu mainMenuFrame;
+    private MainMenu mainMenu;
     
     public static void main(String argv[]) {
         javax.swing.SwingUtilities.invokeLater(new Runnable(){
@@ -16,6 +16,6 @@ public class Othello {
     }
 
     public Othello(){
-        this.mainMenuFrame = new MainMenu();
+        this.mainMenu = new MainMenu();
     }
 }

@@ -1,4 +1,3 @@
-
 package ija.ija2015.gui;
 
 import javax.swing.*;

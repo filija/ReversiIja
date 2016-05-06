@@ -4,7 +4,7 @@ package ija.ija2015.homework2.board;
  *
  * @author xturek05
  */
-public class Board {
+public class Board implements java.io.Serializable{
     
     private int size;
     private Field field[][];
@@ -63,5 +63,36 @@ public class Board {
     
     public Rules getRules() {
         return this.rules;
+    }
+
+
+    
+    public int countBlack() {
+        int count = 0;
+        for (int row = 0; row < this.size; row++) {
+            for (int col = 0; col < this.size; col++) { 
+                if (!field[row][col].isEmpty()) {
+                    if (!field[row][col].getDisk().isWhite()) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    
+    public int countWhite() {
+        int count = 0;
+        size = getSize();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {  
+                if (!field[row][col].isEmpty()) {
+                    if (field[row][col].getDisk().isWhite()) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
     }
 }
