@@ -41,9 +41,9 @@ public class CreatBoard implements MouseListener{
 	private int countW;
 	private int countB;
 	final private int stackCount;
-	private LoadGame load;
+	private LoadGame loader;
 	
-	public CreatBoard(int sizeBoard, boolean computer) {
+	public CreatBoard(int sizeBoard, boolean computer, Game game) {
 		this.size=sizeBoard;
 		stackCount=sizeBoard*sizeBoard;
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
@@ -95,9 +95,10 @@ public class CreatBoard implements MouseListener{
                 JMenuItem load = new JMenuItem("Načíst hru");
                 file.add(load);
                 load.addActionListener((ActionEvent e) -> {
-                   this.load=new LoadGame(BoardWindow);
-                    hra=this.load.getLoadGame();
+                	loader=new LoadGame(BoardWindow);
+                   
                 });
+              
                 JMenuItem save = new JMenuItem("Uložit hru");
                 file.add(save);
                 save.addActionListener((ActionEvent e) -> {
@@ -143,11 +144,11 @@ public class CreatBoard implements MouseListener{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
 		
-		if(hra==null)
+		if(game==null)
 			this.playGame();
 		else
-			this.playLoadGame();
-
+			this.playLoadGame(game);
+		
 	}
 	/**
 	 * Funkce pro aktualizaci desky a kamenu na desce
@@ -174,9 +175,20 @@ public class CreatBoard implements MouseListener{
 			}
 	}
 	
-	public void playLoadGame()
+	public void playLoadGame(Game hra)
 	{
+		this.hra=hra;
+		board.addMouseListener(this);
+		
+
+
+		if(hra.currentPlayer().isWhite())
+			hrac.setText("Hrac na tahu: Bily");
+		else
+			hrac.setText("Hrac na tahu: Cerny");
 		this.updateBoard(hra);
+		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
+		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
 	}
 	/**
 	 * Funkce pro inicializaci hry
@@ -188,12 +200,6 @@ public class CreatBoard implements MouseListener{
 		Board deska=new Board(pravidla);
 		hra=new Game(deska);
 		
-		Player bily=new Player(true);
-		Player cerny=new Player(false);
-		
-		hra.addPlayer(bily);
-		hra.addPlayer(cerny);
-		hra.nextPlayer();
 		if(hra.currentPlayer().isWhite())
 			hrac.setText("Hrac na tahu: Bily");
 		else
@@ -201,7 +207,6 @@ public class CreatBoard implements MouseListener{
 		this.updateBoard(hra);
 		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
 		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
-		
 		
 	}
 	

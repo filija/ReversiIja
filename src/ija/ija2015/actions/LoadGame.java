@@ -31,7 +31,6 @@ public class LoadGame {
             ObjectInputStream load = new ObjectInputStream(loadFile);
             
             game = (Game) load.readObject();
-            System.out.println(game);
             
             load.close();
         } catch (Exception exc){
@@ -42,7 +41,7 @@ public class LoadGame {
         frame.setVisible(false);
         frame.dispose();
         
-        new CreatBoard(game.getBoard().getSize()-2, true).updateBoard(game);
+        new CreatBoard(game.getBoard().getSize()-2, true, game);
     }
     
     public Game getLoadGame(){

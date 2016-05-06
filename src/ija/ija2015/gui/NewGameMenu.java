@@ -76,19 +76,19 @@ public class NewGameMenu extends JFrame{
         		
         		if(r1.isSelected()){
         			System.out.println("Je zvolena moznost 6");
-        			start=new CreatBoard(6, r5.isSelected());
+        			start=new CreatBoard(6, r5.isSelected(), null);
         		}
         		if(r2.isSelected()){
         			System.out.println("Je zvolena moznost 8");
-        			start=new CreatBoard(8, r5.isSelected());
+        			start=new CreatBoard(8, r5.isSelected(), null);
         		}
         		if(r3.isSelected()){
         			System.out.println("Je zvolena moznost 10");
-        			start=new CreatBoard(10, r5.isSelected());
+        			start=new CreatBoard(10, r5.isSelected(), null);
         		}
         		if(r4.isSelected()){
         			System.out.println("Je zvolena moznost 12");
-        			start=new CreatBoard(12, r5.isSelected());
+        			start=new CreatBoard(12, r5.isSelected(), null);
         		}
         		
         		frame.dispose();
