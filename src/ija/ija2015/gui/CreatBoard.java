@@ -200,6 +200,12 @@ public class CreatBoard implements MouseListener{
 		Board deska=new Board(pravidla);
 		hra=new Game(deska);
 		
+		Player bily=new Player(true);
+		Player cerny=new Player(false);
+		
+		hra.addPlayer(bily);
+		hra.addPlayer(cerny);
+		hra.nextPlayer();
 		if(hra.currentPlayer().isWhite())
 			hrac.setText("Hrac na tahu: Bily");
 		else
