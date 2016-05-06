@@ -38,8 +38,20 @@ public class Tests {
 	
 		
 		hra.nextPlayer();		
-		
+	}
 	
+	@Test
+	public void countTest(){
+		ReversiRules pravidla=new ReversiRules(8);
+		Board deska=new Board(pravidla);
+		Game hra=new Game(deska);
+		
+		Player bily=new Player(true);
+		Player cerny=new Player(false);
+		
+		hra.addPlayer(bily);
+		hra.addPlayer(cerny);
+		assertEquals("Pocet kamenu je 62", 62, hra.currentPlayer().countOfDisks());
 	}
 	
 }

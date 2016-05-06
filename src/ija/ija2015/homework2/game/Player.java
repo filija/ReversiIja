@@ -105,11 +105,17 @@ public class Player {
     
     public void init(Board board) {
         int size = board.getSize();
-        this.DiskCount = size;
+        this.DiskCount = (size-2)*(size-2);
 
         board.getField((size/2)-2, (size/2)-2).putDisk(new Disk(true));
         board.getField(size/2-1, size/2-1).putDisk(new Disk(true));
         board.getField((size/2)-2, size/2-1).putDisk(new Disk(false));
         board.getField(size/2-1, (size/2)-2).putDisk(new Disk(false));
     }
+    
+    public int countOfDisks()
+    {
+		return DiskCount;	
+    }
+    
 }

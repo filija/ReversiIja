@@ -56,6 +56,23 @@ public class Game {
     public Board getBoard() {
        return this.board; 
     }
+    
+    public Player getPlayer(boolean color)
+    {
+    	if(color)	//Pokud je barva hrace bila
+    	{
+    		if(this.player1.isWhite())
+    			return this.player1;
+    		else
+    			return this.player2;
+    	}
+    	else{
+    		if(!this.player1.isWhite())
+    			return this.player1;
+    		else
+    			return this.player2;
+    	}
+    }
 
     
 }

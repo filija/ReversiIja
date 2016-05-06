@@ -55,6 +55,18 @@ public class FieldGUI extends JPanel{
 			diskerB.setVisible(true);			
 		}
 	}
-
+	
+	public void removeImgDisk(colorDisk color)
+	{
+		if(colorDisk.WHITE==color)
+		{
+			diskerW.remove(this);
+			diskerW.setVisible(false);
+		}
+		else{
+			diskerB.remove(this);
+			diskerB.setVisible(false);
+		}
+	}
 	
 }

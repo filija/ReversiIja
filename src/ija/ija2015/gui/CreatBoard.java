@@ -30,16 +30,25 @@ public class CreatBoard implements MouseListener{
 	JLabel hrac;
 	JLabel skore;
 	JLabel errOutput;	//Vystup pro zadane chybne pole
+	JLabel countOfDisksW;
+	JLabel countOfDisksB;
+	
 	JPanel infoPanel;
     JMenuBar menuBar;
 	private Game hra;
 	private int size;
+	private int countW;
+	private int countB;
+	final private int stackCount;
 	
 	CreatBoard(int sizeBoard, boolean computer) {
 		this.size=sizeBoard;
+		stackCount=sizeBoard*sizeBoard;
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
 		infoPanel=new JPanel();
 		errOutput=new JLabel("");
+		countOfDisksW=new JLabel("");
+		countOfDisksB=new JLabel("");
 		
 		if(sizeBoard==6){
 			BoardWindow.setSize(700, 500);
@@ -116,17 +125,17 @@ public class CreatBoard implements MouseListener{
 		for(int i=0;i<size; i++) 
 			for(int j=0; j<size; j++)
 			{		
-		
-					square[i][j]=new FieldGUI();
-					square[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
-					square[i][j].setBackground(colorOfField);
-					board.add(square[i][j]);
-				
+				square[i][j]=new FieldGUI();
+				square[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
+				square[i][j].setBackground(colorOfField);
+				board.add(square[i][j]);
 			}
 		
 		BoardWindow.add(new JPanel());
 		infoPanel.add(hrac, BorderLayout.PAGE_END);
 		infoPanel.add(errOutput, BorderLayout.LINE_END);
+		infoPanel.add(countOfDisksW, BorderLayout.LINE_END);
+		infoPanel.add(countOfDisksB, BorderLayout.LINE_END);
 		BoardWindow.add(infoPanel, FlowLayout.LEFT);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		BoardWindow.setLocation(dim.width/2-BoardWindow.getSize().width/2, dim.height/2-BoardWindow.getSize().height/2);
@@ -140,20 +149,23 @@ public class CreatBoard implements MouseListener{
 	 */
 	public void updateBoard(Game hra)
 	{
+		countW=0;
+		countB=0;
 		for(int i=0; i<this.size; i++)
 			for(int j=0; j<this.size; j++)
 			{
 				if(!(hra.getBoard().getField(i, j).isEmpty())){
 					if(hra.getBoard().getField(i, j).getDisk().isWhite())
 					{
-						this.square[i][j].putImgDisk(colorDisk.WHITE);							
+						this.square[i][j].putImgDisk(colorDisk.WHITE);	
+						countW++;
 					}
 					else{
 						this.square[i][j].putImgDisk(colorDisk.BLACK);
+						countB++;
 					}
 				}
 			}
-		
 	}
 	
 	/**
@@ -177,6 +189,10 @@ public class CreatBoard implements MouseListener{
 		else
 			hrac.setText("Hrac na tahu: Cerny");
 		this.updateBoard(hra);
+		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
+		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
+		
+		
 	}
 	
 	@Override
@@ -187,7 +203,7 @@ public class CreatBoard implements MouseListener{
 			colorDisk actual;
 			System.out.println("i je: "+i);
 			System.out.println("j je: "+j);
-		
+				
 			if(hra.currentPlayer().isWhite()){
 				actual=colorDisk.WHITE;
 			}				
@@ -212,6 +228,8 @@ public class CreatBoard implements MouseListener{
 				//this.updateBoard(this.hra);
 				
 			}
+			countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
+			countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
 	}
 
 	@Override
@@ -228,6 +246,7 @@ public class CreatBoard implements MouseListener{
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
