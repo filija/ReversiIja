@@ -6,6 +6,9 @@
 package ija.ija2015.homework2.game;
 
 import ija.ija2015.homework2.board.Board;
+import java.io.*;
+import java.util.*;
+import java.awt.*;
 
 /**
  *
@@ -70,5 +73,37 @@ public class Game implements java.io.Serializable, Cloneable{
     public Game clone() throws CloneNotSupportedException {
         return (Game) super.clone();
     }
+    
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	public void setAi(int ai) {
+		Ai = ai;
+	}
+
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	public void setPlayer1(Player player1) {
+		this.player1 = player1;
+	}
+
+	public Player getPlayer2() {
+		return player2;
+	}
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
+	}
+
+	public Player getPlayerOnTurn() {
+		return playerOnTurn;
+	}
+
+	public void setPlayerOnTurn(Player playerOnTurn) {
+		this.playerOnTurn = playerOnTurn;
+	}
     
 }
