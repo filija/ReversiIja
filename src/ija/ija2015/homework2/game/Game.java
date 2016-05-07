@@ -11,7 +11,7 @@ import ija.ija2015.homework2.board.Board;
  *
  * @author xturek05
  */
-public class Game implements java.io.Serializable{
+public class Game implements java.io.Serializable, Cloneable{
     protected Player player1;
     protected Player player2;
     protected Player playerOnTurn;
@@ -66,4 +66,9 @@ public class Game implements java.io.Serializable{
     public int getAi(){
             return this.Ai;
     }
+    
+    public Game clone() throws CloneNotSupportedException {
+        return (Game) super.clone();
+    }
+    
 }

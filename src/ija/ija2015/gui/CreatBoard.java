@@ -243,9 +243,8 @@ public class CreatBoard implements MouseListener, ActionListener{
 		
 		Player bily=new Player(true);
 		Player cerny=new Player(false);
-		
-		
-                hra.addPlayer(bily);
+
+		hra.addPlayer(bily);
                 
 		hra.addPlayer(cerny);
 		hra.nextPlayer();
@@ -253,21 +252,33 @@ public class CreatBoard implements MouseListener, ActionListener{
 			hrac.setText("Hrac na tahu: Bily");
 		else
 			hrac.setText("Hrac na tahu: Cerny");
+
 		this.updateBoard(hra);
 		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
 		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
 		
 	}
 	
+	public void undoGame(Game hra){
+		for(int i=0;i<hra.getBoard().getSize(); i++)
+			for(int j=0; j<hra.getBoard().getSize(); j++)
+			{
+				if(!hra.getBoard().getField(i, j).isEmpty())
+					System.out.println("i je: "+i+" j je: "+j);
+			}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
             //TODO Vytvorit i pro ostatni velikosti desek, jen souradnice.
-            
-			/*Tady se resi UNDO*/
-			prevGame[iterator]=new Game(this.hra.getBoard(), AI);
-			iterator++;
-			/*Konec UNDO*/
 			
+		
+		 /*Tady se resi UNDO*/
+        
+		prevGame[iterator]=new Game(hra.getBoard(), AI);						
+		iterator++;
+		
+		/*Konec UNDO*/
 			int i=e.getY()/63;
             int j=e.getX()/63;
             colorDisk actual;
@@ -301,20 +312,14 @@ public class CreatBoard implements MouseListener, ActionListener{
             }
             countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
             countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
-            
+           
         }
 	
 	/*Tady se resi UNDO*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for(int i=0; i<size; i++)
-			for(int j=0; j<size; j++)
-			{
-				if(!prevGame[iterator-1].getBoard().getField(i, j).isEmpty())
-					System.out.println("i je: "+i+" a j je: "+j);
-			}
 		
-		this.playLoadGame(prevGame[iterator-1]);
+		this.undoGame(prevGame[iterator-1]);
 	}
 	/*Konec UNDO*/
 	
