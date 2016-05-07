@@ -54,6 +54,15 @@ public class FieldGUI extends JPanel{
 			diskerB.setVisible(true);			
 		}
 	}
+	
+	public void removeDisk(){
+		if(diskerB!=null)
+			diskerB.remove(this);
+		else if(diskerW!=null)
+			diskerW.remove(this);
+		else
+			return;
+	}
 
 	
 }

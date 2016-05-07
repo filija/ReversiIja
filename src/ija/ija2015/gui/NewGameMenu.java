@@ -29,18 +29,13 @@ public class NewGameMenu extends JFrame{
         frame.getContentPane().add(lblNumberOfPlayers);
         
         JRadioButton r1 = new JRadioButton("6x6");
-        r1.setActionCommand("6");
         JRadioButton r2 = new JRadioButton("8x8", true);
-        r2.setActionCommand("8");
         JRadioButton r3 = new JRadioButton("10x10");
-        r3.setActionCommand("10");
         JRadioButton r4 = new JRadioButton("12x12");
-        r4.setActionCommand("12");
         
-        JRadioButton r5 = new JRadioButton("Computer", true);
-        r5.setActionCommand("computer");
-        JRadioButton r6 = new JRadioButton("Player");
-        r6.setActionCommand("player");
+        JRadioButton r5 = new JRadioButton("Player", true);
+        JRadioButton r6 = new JRadioButton("Computer1");
+        JRadioButton r7 = new JRadioButton("Computer2");
         
         ButtonGroup boardSizeGroup = new ButtonGroup();
         boardSizeGroup.add(r1);
@@ -51,7 +46,7 @@ public class NewGameMenu extends JFrame{
         ButtonGroup playerGroup = new ButtonGroup();
         playerGroup.add(r5);
         playerGroup.add(r6);
-        
+        playerGroup.add(r7);
         lblBoardSize.setLayout( new FlowLayout());
         lblBoardSize.setText("Board Size:");
         lblBoardSize.setSize(400, 30);
@@ -66,6 +61,7 @@ public class NewGameMenu extends JFrame{
         lblNumberOfPlayers.setSize(400, 30);
         lblNumberOfPlayers.add(r5);
         lblNumberOfPlayers.add(r6);
+        lblNumberOfPlayers.add(r7);
         
         JButton b1 = new JButton("Start Game");
         b1.setBounds(100, 120, 150, 50);
@@ -76,19 +72,43 @@ public class NewGameMenu extends JFrame{
         		
         		if(r1.isSelected()){
         			System.out.println("Je zvolena moznost 6");
-        			start=new CreatBoard(6, r5.isSelected(), null);
+                                if (r5.isSelected()) {
+                                    start=new CreatBoard(6, 0, null);
+                                } else if (r6.isSelected()) {
+                                    start=new CreatBoard(6, 1, null);
+                                } else {
+                                    start=new CreatBoard(6, 2, null);
+                                }
         		}
         		if(r2.isSelected()){
         			System.out.println("Je zvolena moznost 8");
-        			start=new CreatBoard(8, r5.isSelected(), null);
+        			if (r5.isSelected()) {
+                                    start=new CreatBoard(8, 0, null);
+                                } else if (r6.isSelected()) {
+                                    start=new CreatBoard(8, 1, null);
+                                } else {
+                                    start=new CreatBoard(8, 2, null);
+                                }
         		}
         		if(r3.isSelected()){
         			System.out.println("Je zvolena moznost 10");
-        			start=new CreatBoard(10, r5.isSelected(), null);
+        			if (r5.isSelected()) {
+                                    start=new CreatBoard(10, 0, null);
+                                } else if (r6.isSelected()) {
+                                    start=new CreatBoard(10, 1, null);
+                                } else {
+                                    start=new CreatBoard(10, 2, null);
+                                }
         		}
         		if(r4.isSelected()){
         			System.out.println("Je zvolena moznost 12");
-        			start=new CreatBoard(12, r5.isSelected(), null);
+        			if (r5.isSelected()) {
+                                    start=new CreatBoard(12, 0, null);
+                                } else if (r6.isSelected()) {
+                                    start=new CreatBoard(12, 1, null);
+                                } else {
+                                    start=new CreatBoard(12, 2, null);
+                                }
         		}
         		
         		frame.dispose();

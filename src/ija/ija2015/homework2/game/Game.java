@@ -16,8 +16,10 @@ public class Game implements java.io.Serializable{
     protected Player player2;
     protected Player playerOnTurn;
     protected Board board;
+    int Ai;
     
-    public Game(Board board) {
+    public Game(Board board, int Ai) {
+        this.Ai = Ai;
         this.board = board;
     }
 
@@ -59,5 +61,9 @@ public class Game implements java.io.Serializable{
     
     public Board getBoard() {
        return board; 
+    }
+    
+    public int getAi(){
+            return this.Ai;
     }
 }
