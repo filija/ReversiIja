@@ -41,7 +41,7 @@ public class LoadGame {
         frame.setVisible(false);
         frame.dispose();
         
-        new CreatBoard(game.getBoard().getSize()-2, game.getAi(), game);
+        new CreatBoard(game.getBoard().getSize()-2, game.getAi(), game, 0, 0, 0, false);
     }
     
     public Game getLoadGame(){

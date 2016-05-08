@@ -47,6 +47,7 @@ public class FieldGUI extends JPanel{
 		if(colorDisk.WHITE==color)
 		{
 			diskerB.setVisible(false);
+			diskerT.setVisible(false);
 			diskerB.remove(this);
 			diskerT.remove(this);
 			this.add(diskerW, BorderLayout.CENTER); 
@@ -60,7 +61,8 @@ public class FieldGUI extends JPanel{
 			diskerT.setVisible(true);
 		}
 		else{
-			diskerW.setVisible(false);	
+			diskerW.setVisible(false);
+			diskerT.setVisible(false);
 			diskerB.remove(this);
 			diskerT.remove(this);
 			this.add(diskerB, BorderLayout.CENTER);
