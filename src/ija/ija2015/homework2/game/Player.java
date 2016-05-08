@@ -46,7 +46,7 @@ public class Player implements java.io.Serializable{
             for(Field.Direction dir : Field.Direction.values()) {
                 field2 = field.nextField(dir);
                 if (field2 != null) {
-                    if (field2.getDisk() != null) {
+                    if (field2.getDisk() != null && !field2.getDisk().isFrozen()) {
                         if (field2.getDisk().isWhite() != "white".equals(this.color)) {
                             while (field2 != null && field2.getDisk() != null) {
                                 if (field2.getDisk().isWhite() == "white".equals(this.color)) {
@@ -80,7 +80,7 @@ public class Player implements java.io.Serializable{
                 if (field2 != null && field2.getDisk() != null) {
                     if (field2.getDisk().isWhite() != "white".equals(this.color)) {
 
-                        while (field2 != null && field2.getDisk() != null) {
+                        while (field2 != null && field2.getDisk() != null && !field2.getDisk().isFrozen()) {
                             if(field2.getDisk().isWhite() == "white".equals(this.color)) {
                                 changeDir = dir;
                                 break;

@@ -9,6 +9,7 @@ import java.util.Objects;
 public class Disk implements java.io.Serializable{
 
     private String color;
+    private boolean frozen;
     
     public Disk(boolean isWhite) {
         if (isWhite) {   
@@ -17,6 +18,8 @@ public class Disk implements java.io.Serializable{
         else {
             this.color = "black";
         }
+        
+        this.frozen=false;
     }
 
     public void turn(){
@@ -56,4 +59,25 @@ public class Disk implements java.io.Serializable{
         }
         return true;
     }
+    
+    public boolean isFrozen()
+    {
+    	if(this.frozen)
+    		return true;
+    	else
+    		return false;
+    }
+    
+    public void setFrozen()
+    {
+    	if(!this.frozen)
+    		this.frozen=true;
+    }
+    
+    public void unSetFrozen()
+    {
+    	if(this.frozen)
+    		this.frozen=false;
+    }
+    
 }

@@ -18,6 +18,7 @@ import ija.ija2015.homework2.board.Board;
 import ija.ija2015.homework2.game.Game;
 import ija.ija2015.homework2.game.Player;
 import ija.ija2015.homework2.game.ReversiRules;
+import ija.ija2015.homework2.game.DiskFrozen;
 import ija.ija2015.actions.SaveGame;
 import ija.ija2015.actions.Turns;
 import java.awt.Toolkit;
@@ -39,7 +40,7 @@ public class CreatBoard implements MouseListener, ActionListener{
         int index = 1;
 	
 	JPanel infoPanel;
-        JMenuBar menuBar;
+    JMenuBar menuBar;
 	private Game hra;
 	private int size;
 	private int countW;
@@ -48,11 +49,21 @@ public class CreatBoard implements MouseListener, ActionListener{
 	final private int stackCount;
 	private Game prevGame[];
 	private LoadGame loader;
+	private DiskFrozen frozen;
+	private boolean checked;
+	private int ttf;
+	private int tof;
+	private int cfd;
+	
         int AI;
 	
-	public CreatBoard(int sizeBoard, int computer, Game game) {
+	public CreatBoard(int sizeBoard, int computer, Game game, int ttf, int tof, int cfd, boolean checked) {
 		this.size=sizeBoard;
                 this.AI = computer;
+        this.checked=checked;
+        this.ttf=ttf;
+        this.tof=tof;
+        this.cfd=cfd;
 		stackCount=sizeBoard*sizeBoard;
 		prevGame=new Game[60];
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
@@ -178,7 +189,11 @@ public class CreatBoard implements MouseListener, ActionListener{
             for(int i=0; i<this.size; i++) {
                 for(int j=0; j<this.size; j++) {
                     if(!(hra.getBoard().getField(i, j).isEmpty())){
-			if(hra.getBoard().getField(i, j).getDisk().isWhite()) {
+            if(hra.getBoard().getField(i, j).getDisk().isFrozen())
+            {
+            	this.square[i][j].putImgDisk(colorDisk.TRANSPARENT);
+            }
+            else if(hra.getBoard().getField(i, j).getDisk().isWhite()) {
                             this.square[i][j].putImgDisk(colorDisk.WHITE);	
                             countW++;
 			} else {
@@ -199,6 +214,10 @@ public class CreatBoard implements MouseListener, ActionListener{
 
 	}
 	
+	/**
+	 * Funkce pro vycisteni desky
+	 * @param hra
+	 */
 	public void clearBoard(Game hra){
 		Color colorOfField=new Color(81, 191, 81);
 		for(int i=0;i<size; i++) 
@@ -275,6 +294,8 @@ public class CreatBoard implements MouseListener, ActionListener{
 		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
 		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
 		this.turn = new Turns();
+		if(checked)
+			frozen=new DiskFrozen(ttf, tof, cfd, this.hra);
 	}
 
 	
@@ -333,21 +354,41 @@ public class CreatBoard implements MouseListener, ActionListener{
                     game.getBoard().getField(i, j).putDisk(disk2);
                 }
             }
-            this.hra = game;
             Player bily=new Player(true);
             Player cerny=new Player(false);
-            game.addPlayer(bily);
-            game.addPlayer(cerny);
-            game.nextPlayer();
             
-            this.clearBoard(game);
-            this.playLoadGame(game);
+            if(hra.getPlayer1().isWhite()){
+            	bily=hra.getPlayer1();
+            	cerny=hra.getPlayer2();
+            }
+            else{
+            	bily=hra.getPlayer2();
+            	cerny=hra.getPlayer1();
+            }
+            
+            this.hra=null;
+            this.hra = game;
+            
+            this.hra.addPlayer(bily);
+            this.hra.addPlayer(cerny);
+            this.hra.nextPlayer();
+            this.clearBoard(this.hra);
+            this.updateBoard(this.hra);
             index--;
         }
         
         @Override
 	public void actionPerformed(ActionEvent e) {
             //
+        	for(int i=0; i<hra.getBoard().getSize(); i++)
+        		for(int j=0; j<hra.getBoard().getSize(); j++)
+        		{
+        			if(!hra.getBoard().getField(i, j).isEmpty())
+        			{
+        				System.out.println("i je: "+i+" j je: "+j);
+        			}
+        		}
+        	System.out.println("-----------------");
         	undo();
 	}
 	
