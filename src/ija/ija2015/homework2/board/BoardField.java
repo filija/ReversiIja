@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- *
- * @author xturek05
+ * Třída reprezentující aktivní políčko
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
+
 public class BoardField implements Field, java.io.Serializable {
     private Field array[];
     private int row;
@@ -19,17 +21,23 @@ public class BoardField implements Field, java.io.Serializable {
         array = new Field[8];
     }
     
-    @Override
+    /**
+     * Funkce pro přídání vedlejšího políčka
+     */
     public void addNextField(Field.Direction dirs, Field field) {
         this.array[dirs.ordinal()] = field;
     }
     
-    @Override
+    /**
+     * Funkce vracející vedlejší políčko
+     */
     public Field nextField(Field.Direction dirs) {
        return this.array[dirs.ordinal()];
     }
     
-    @Override
+    /**
+     * Funkce pro vložení disku na pole
+     */
     public boolean putDisk(Disk disk) {
         if (this.disk == null) {
             this.disk = disk;
@@ -39,12 +47,13 @@ public class BoardField implements Field, java.io.Serializable {
         }
     }
     
-    @Override
+    /**
+     * Funkce pro navrácení disku z aktuálního pole
+     */
     public Disk getDisk() {
         return this.disk;
     }
 
-    @Override
     public int hashCode() {
         int hash = 3;
         hash = 29 * hash + Arrays.deepHashCode(this.array);
@@ -54,7 +63,6 @@ public class BoardField implements Field, java.io.Serializable {
         return hash;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -78,12 +86,16 @@ public class BoardField implements Field, java.io.Serializable {
         return true;
     }
 
-    @Override
+    /**
+     * Funkce pro ověření zda je možné vložit disk na pole
+     */
     public boolean canPutDisk(Disk disk) {
         return this.disk == null;
     }
     
-    @Override
+    /**
+     * Funkce pro ověření prázdného políčka
+     */
     public boolean isEmpty() {
         return (this.disk == null);   
     }

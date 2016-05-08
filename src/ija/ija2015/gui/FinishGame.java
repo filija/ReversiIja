@@ -6,6 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
+/**
+ * Třída Definující konec hry
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
+ */
 
 public class FinishGame {
     

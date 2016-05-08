@@ -1,9 +1,11 @@
 package ija.ija2015.homework2.board;
 
 /**
- *
- * @author xturek05
+ * Třída reprezentující okrajové políčko
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
+
 public class BorderField implements Field, java.io.Serializable {    
     private Field array[];
     private Disk disk;
@@ -12,15 +14,21 @@ public class BorderField implements Field, java.io.Serializable {
         array = new Field[8];
     }
     
-    @Override
+    /**
+     * Funkce pro přídání vedlejšího políčka
+     */
     public void addNextField(Field.Direction dirs, Field field){}
-    
-    @Override  
+      
+    /**
+     * Funkce vracející vedlejší políčko
+     */
     public Field nextField(Field.Direction dirs) {
        return this.array[dirs.ordinal()];
     }
-    
-    @Override    
+        
+    /**
+     * Funkce pro vložení disku na pole
+     */
     public boolean putDisk(Disk disk) {
         if (this.disk == null) {
             this.disk = new Disk(false);
@@ -30,18 +38,24 @@ public class BorderField implements Field, java.io.Serializable {
             return false;
         }		
     }
-   
-    @Override    
+       
+    /**
+     * Funkce pro navrácení disku z aktuálního pole
+     */
     public Disk getDisk() {
         return this.disk;
     }
-
-    @Override
+    
+    /**
+     * Funkce pro ověření zda je možné vložit disk na pole
+     */
     public boolean canPutDisk(Disk disk) {
         return this.disk == null;
     }
     
-    @Override
+    /**
+     * Funkce pro ověření prázdného políčka
+     */
     public boolean isEmpty() {
         return ((this.disk == null));   
     }

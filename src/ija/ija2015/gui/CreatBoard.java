@@ -20,13 +20,16 @@ import ija.ija2015.homework2.game.Player;
 import ija.ija2015.homework2.game.ReversiRules;
 import ija.ija2015.homework2.game.DiskFrozen;
 import ija.ija2015.actions.SaveGame;
-import ija.ija2015.actions.Turns;
 import java.awt.Toolkit;
 import ija.ija2015.gui.colorDisk; 
 import ija.ija2015.gui.FieldGUI;
-import ija.ija2015.homework2.board.Disk;
 
-public class CreatBoard implements MouseListener, ActionListener{
+/**
+ * Třída pro vytvoření uživatelského rozhraní desky
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
+ */
+public class CreatBoard implements MouseListener{
 	JFrame BoardWindow;
 	JPanel board;
 	FieldGUI square[][];
@@ -36,8 +39,6 @@ public class CreatBoard implements MouseListener, ActionListener{
 	JLabel countOfDisksW;
 	JLabel countOfDisksB;
 	JButton undo;
-        Turns turn;
-        int index = 1;
 	
 	JPanel infoPanel;
     JMenuBar menuBar;
@@ -45,11 +46,7 @@ public class CreatBoard implements MouseListener, ActionListener{
 	private int size;
 	private int countW;
 	private int countB;
-	private int iterator;
 	final private int stackCount;
-	private Game prevGame[];
-	private LoadGame loader;
-	private DiskFrozen frozen;
 	private boolean checked;
 	private int ttf;
 	private int tof;
@@ -65,17 +62,11 @@ public class CreatBoard implements MouseListener, ActionListener{
         this.tof=tof;
         this.cfd=cfd;
 		stackCount=sizeBoard*sizeBoard;
-		prevGame=new Game[60];
 		BoardWindow=new JFrame("Reversi play"); 	//frame hraciho pole
 		infoPanel=new JPanel();
 		errOutput=new JLabel("");
 		countOfDisksW=new JLabel("");
 		countOfDisksB=new JLabel("");
-		undo=new JButton("UNDO");
-		
-		undo.setSize(new Dimension(10, 10));
-		undo.setVisible(true);
-		undo.addActionListener(this);
 		
 		if(sizeBoard==6){
 			BoardWindow.setSize(700, 500);
@@ -120,7 +111,7 @@ public class CreatBoard implements MouseListener, ActionListener{
                 JMenuItem load = new JMenuItem("Načíst hru");
                 file.add(load);
                 load.addActionListener((ActionEvent e) -> {
-                	loader=new LoadGame(BoardWindow);
+                	new LoadGame(BoardWindow);
                    
                 });
               
@@ -161,7 +152,6 @@ public class CreatBoard implements MouseListener, ActionListener{
 			}
 		
 		BoardWindow.add(new JPanel());
-		infoPanel.add(undo, BorderLayout.PAGE_START);
 		infoPanel.add(hrac, BorderLayout.PAGE_END);
 		infoPanel.add(errOutput, BorderLayout.LINE_END);
 		infoPanel.add(countOfDisksW, BorderLayout.LINE_END);
@@ -177,7 +167,7 @@ public class CreatBoard implements MouseListener, ActionListener{
 		
 	}
 	/**
-	 * Funkce pro aktualizaci desky a kamenu na desce
+	 * Funkce pro aktualizaci desky a kamenů na desce
 	 * @param hra
 	 */
 	public void updateBoard(Game hra)
@@ -201,9 +191,9 @@ public class CreatBoard implements MouseListener, ActionListener{
                             countB++;
 			}
                     } else {
-                        //if (hra.currentPlayer().canPutDisk(hra.getBoard().getField(i, j))) {
+                        if (hra.currentPlayer().canPutDisk(hra.getBoard().getField(i, j))) {
                             noMoves = false;
-                        //}
+                        }
                         boardFull = false;
                     }
                 }
@@ -215,7 +205,7 @@ public class CreatBoard implements MouseListener, ActionListener{
 	}
 	
 	/**
-	 * Funkce pro vycisteni desky
+	 * Funkce pro vyčistění desky
 	 * @param hra
 	 */
 	public void clearBoard(Game hra){
@@ -231,7 +221,10 @@ public class CreatBoard implements MouseListener, ActionListener{
 			}
 		
 	}
-        
+        /**
+         * Funkce pro ověření konce hry a výpisu konečného skóre
+         * @param game
+         */
         public void finishGame(Game game) {
             int size = game.getBoard().getSize();
             int score1 = game.getBoard().countBlack();
@@ -253,7 +246,10 @@ public class CreatBoard implements MouseListener, ActionListener{
             }
         }
         
-        
+        /**
+         * funkce pro načtení uložené hry
+         * @param hra
+         */
 	public void playLoadGame(Game hra)
 	{
 		this.hra=hra;
@@ -268,11 +264,10 @@ public class CreatBoard implements MouseListener, ActionListener{
 		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
 	}
 	/**
-	 * Funkce pro inicializaci hry
+	 * Funkce pro inicializaci a začátek hry
 	 */
 	public void playGame()
 	{
-		iterator=0;
 		board.addMouseListener(this);
 		ReversiRules pravidla=new ReversiRules(this.size+2);
 		Board deska=new Board(pravidla);
@@ -293,13 +288,15 @@ public class CreatBoard implements MouseListener, ActionListener{
 		this.updateBoard(hra);
 		countOfDisksW.setText("K dispozici bily: "+(stackCount-countW));
 		countOfDisksB.setText("K dispozici cerny: "+(stackCount-countB));
-		this.turn = new Turns();
 		if(checked)
-			frozen=new DiskFrozen(ttf, tof, cfd, this.hra);
+			new DiskFrozen(ttf, tof, cfd, this.hra);
 	}
 
 	
 	@Override
+	/**
+	 * Funkce pro zahrání tahu
+	 */
 	public void mouseClicked(MouseEvent e) {
             //TODO Vytvorit i pro ostatni velikosti desek, jen souradnice.
             int i=e.getY()/63;
@@ -323,8 +320,6 @@ public class CreatBoard implements MouseListener, ActionListener{
                 }
                 square[i][j].putImgDisk(actual);
                 hra.currentPlayer().putDisk(hra.getBoard().getField(i, j));
-                this.turn.saveTurn(i, j, index);
-                index++;
                 hra.nextPlayer();
                 
                 if (this.AI != 0) {
@@ -340,57 +335,6 @@ public class CreatBoard implements MouseListener, ActionListener{
            
         }
         
-        public void undo() {
-            Game game = new Game(new Board(this.hra.getBoard().getRules()), this.AI);
-            for (int x = 1; x < index; x++) {
-                int i = turn.getXTurn(x);
-                int j = turn.getYTurn(x);
-                Disk disk1 = new Disk(false);
-                Disk disk2 = new Disk(true);
-                game.getBoard().getField(i, j).putDisk(disk1);
-                if (x+1<index) {
-                    i = turn.getXTurn(x+1);
-                    j = turn.getYTurn(x+1);
-                    game.getBoard().getField(i, j).putDisk(disk2);
-                }
-            }
-            Player bily=new Player(true);
-            Player cerny=new Player(false);
-            
-            if(hra.getPlayer1().isWhite()){
-            	bily=hra.getPlayer1();
-            	cerny=hra.getPlayer2();
-            }
-            else{
-            	bily=hra.getPlayer2();
-            	cerny=hra.getPlayer1();
-            }
-            
-            this.hra=null;
-            this.hra = game;
-            
-            this.hra.addPlayer(bily);
-            this.hra.addPlayer(cerny);
-            this.hra.nextPlayer();
-            this.clearBoard(this.hra);
-            this.updateBoard(this.hra);
-            index--;
-        }
-        
-        @Override
-	public void actionPerformed(ActionEvent e) {
-            //
-        	for(int i=0; i<hra.getBoard().getSize(); i++)
-        		for(int j=0; j<hra.getBoard().getSize(); j++)
-        		{
-        			if(!hra.getBoard().getField(i, j).isEmpty())
-        			{
-        				System.out.println("i je: "+i+" j je: "+j);
-        			}
-        		}
-        	System.out.println("-----------------");
-        	undo();
-	}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {

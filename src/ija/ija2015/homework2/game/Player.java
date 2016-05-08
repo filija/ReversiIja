@@ -8,10 +8,10 @@ package ija.ija2015.homework2.game;
 import ija.ija2015.homework2.board.Board;
 import ija.ija2015.homework2.board.Disk;
 import ija.ija2015.homework2.board.Field;
-import java.util.Objects;
+
 
 /**
- *
+ *	Trida reprezentujici hrace
  * @author xturek05
  */
 

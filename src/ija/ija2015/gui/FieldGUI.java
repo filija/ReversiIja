@@ -1,13 +1,11 @@
 package ija.ija2015.gui;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import ija.ija2015.gui.CreatBoard;
+
 /**
- * 
- * @author Jakub Filipek
- *	Trida Definujici graficke policko desky
+ * Třída Definující grafické políčko desky
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
 
 public class FieldGUI extends JPanel{
@@ -40,7 +38,7 @@ public class FieldGUI extends JPanel{
 	/**
 	 * 
 	 * @param color
-	 * Funkce pro vlozeni obrazku kamene na pole
+	 * Funkce pro vložení obrázku kamene na pole
 	 */
 	public void putImgDisk(colorDisk color){
 		     
@@ -70,6 +68,9 @@ public class FieldGUI extends JPanel{
 		}
 	}
 	
+	/**
+	 * Funkce pro odstranění obrázku kamene
+	 */
 	public void removeDisk(){
 		if(diskerB!=null)
 			diskerB.remove(this);

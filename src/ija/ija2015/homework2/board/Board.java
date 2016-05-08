@@ -1,8 +1,9 @@
 package ija.ija2015.homework2.board;
 
 /**
- *
- * @author xturek05
+ * Třída reprezentující hrací desku
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
 public class Board implements java.io.Serializable{
     
@@ -53,20 +54,37 @@ public class Board implements java.io.Serializable{
         }
     }
     
+    /**
+     * Funkce pro vrácení pole desky
+     * @param row řadek desky
+     * @param col sloupec desky
+     * @return	hrací políčko
+     */
     public Field getField(int row, int col) {
         return this.field[row][col];
     }
     
+    /**
+     * Funkce pro vrácení velikosti hrací desky
+     * @return	velikost desky
+     */
     public int getSize() {
         return this.size;
     } 
     
+    /**
+     * Funkce pro vrácení herních pravidel
+     * @return	pravidla
+     */
     public Rules getRules() {
         return this.rules;
     }
 
 
-    
+    /**
+     * Funkce počítaní černých kamenů
+     * @return	počet černých kamenů
+     */
     public int countBlack() {
         int count = 0;
         for (int row = 0; row < this.size; row++) {
@@ -81,6 +99,10 @@ public class Board implements java.io.Serializable{
         return count;
     }
     
+    /**
+     * Funkce počítaní bílých kamenů
+     * @return	počet bílých kamenů
+     */
     public int countWhite() {
         int count = 0;
         size = getSize();

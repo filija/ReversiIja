@@ -3,9 +3,11 @@ package ija.ija2015.homework2.board;
 import java.util.Objects;
 
 /**
- *
- * @author xturek05
+ * Třída reprezentující Disk
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
+
 public class Disk implements java.io.Serializable{
 
     private String color;
@@ -22,6 +24,9 @@ public class Disk implements java.io.Serializable{
         this.frozen=false;
     }
 
+    /**
+     * Funkce pro otáčení disku
+     */
     public void turn(){
         if ("white".equals(this.color)) {
             this.color = "black";
@@ -31,6 +36,10 @@ public class Disk implements java.io.Serializable{
         }
     }
 
+    /**
+     * Funkce pro ověření zda je disk bilý
+     * @return True, pokud je disk bílý
+     */
     public boolean isWhite(){
         return "white".equals(this.color);
     }
@@ -60,6 +69,10 @@ public class Disk implements java.io.Serializable{
         return true;
     }
     
+    /**
+     * Funkce pro ověření zda je disk zablokován
+     * @return true, pokud je disk blokovaný
+     */
     public boolean isFrozen()
     {
     	if(this.frozen)
@@ -68,12 +81,18 @@ public class Disk implements java.io.Serializable{
     		return false;
     }
     
+    /**
+     * nastaví disk na blokovaný
+     */
     public void setFrozen()
     {
     	if(!this.frozen)
     		this.frozen=true;
     }
     
+    /**
+     * nastaví disk na neblokovaný
+     */
     public void unSetFrozen()
     {
     	if(this.frozen)

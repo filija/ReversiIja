@@ -1,7 +1,10 @@
 package ija.ija2015.homework2.game;
 
-import java.util.Random;
-
+/**
+ * Trida implementujici blokovani kamenu
+ * @author kuba
+ *
+ */
 public class DiskFrozen implements Runnable{
 
 	private int timeToFreeze;	//Doba k zamrznuti
@@ -21,6 +24,9 @@ public class DiskFrozen implements Runnable{
 	}
 	
 	@Override
+	/**
+	 * Spusteni vlakna na blokovani kamenu
+	 */
 	public void run() {
 		// TODO Auto-generated method stu
 		int iter=0; //pocitadlo zmrzlych disku
@@ -56,7 +62,9 @@ public class DiskFrozen implements Runnable{
 		}
 		
 	}
-	
+	/**
+	 * Funkce pro navrat blokovanych kamenu do puvodniho stavu
+	 */
 	public void freezeBack()
 	{
 		for(int i=0; i<hra.getBoard().getSize(); i++)

@@ -5,6 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Třída implementuje menu s volbami hry
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
+ */
 public class NewGameMenu extends JFrame{
     private JFrame frame;
     
@@ -102,7 +107,7 @@ public class NewGameMenu extends JFrame{
                         	C=Integer.parseInt(c.getText());
                         	}
                         	catch(NumberFormatException exc){
-                        		System.out.println("Vyplnte vsechna pole");
+                        		System.out.println("Vyplnte vsechna pole platnymi hodnotami");
                         		return;
                         	}
                         }

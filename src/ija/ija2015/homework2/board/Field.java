@@ -1,8 +1,9 @@
 package ija.ija2015.homework2.board;
 
 /**
- *
- * @author xturek05
+ * Rozhraní reprezentující políčko herní desky
+ * @author Filípek Jakub (xfilip34)
+ * @author Turek Matej	(xturek05)
  */
 public interface Field {
 
